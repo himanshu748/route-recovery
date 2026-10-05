@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f1f3f2">
+  <meta name="description" content="Change a synthetic delivery floor, find a permitted detour, and inspect every move. Try Route Recovery's local simulation.">
+  <title>Route Recovery — A clear path, or a clear stop</title>
+  <link rel="icon" href="data:,"><link rel="stylesheet" href="/marketing.css"><link rel="stylesheet" href="/route-landing.css">
+  <script type="module" src="/route-landing.js"></script>
+</head>
+<body class="route-marketing">
+  <a class="skip-link" href="#route-demo">Skip to interactive map</a>
+  <div class="marketing-shell">
+    <header class="marketing-nav">
+      <a class="marketing-brand" href="/products/route"><svg viewBox="0 0 36 36" aria-hidden="true"><path d="M8 28V8h20v20H18V18"/><circle cx="18" cy="18" r="2.5"/></svg><span>Route Recovery</span></a>
+      <nav class="marketing-links" aria-label="Product navigation"><a href="/">Home</a><a href="#mechanism">How it works</a><a class="marketing-button workbench-link" href="/route/">Open workbench<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5"/></svg></a></nav>
+    </header>
+    <main>
+      <section class="route-intro" aria-labelledby="route-title">
+        <div class="intro-copy">
+          <h1 id="route-title">A clear path.<br>Or a clear <span>stop.</span></h1>
+          <p class="intro-description">A blocked crossing interrupts the delivery. Find a permitted detour, or hold position and ask for clearance.</p>
+          <a class="marketing-button launch-button" href="/route/">Plan a delivery<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5"/></svg></a>
+          <p class="intro-footnote">A fully known 2D grid you can inspect.<br>No sensors, robot hardware, or physics simulation.</p>
+          <div class="intro-key"><span class="route-swatch"></span><span>Permitted route</span><span class="wall-swatch"></span><span>Fixed wall</span></div>
+        </div>
+        <div id="route-demo" class="demo-instrument" aria-labelledby="demo-heading">
+          <div class="demo-top"><div><h2 id="demo-heading">Try the crossing</h2><p>Local 2D simulation</p></div><span id="demo-status" class="demo-status">Unavailable</span></div>
+          <div class="demo-map-wrap">
+            <div class="demo-columns" aria-hidden="true"><span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span><span>H</span><span>I</span></div>
+            <div class="demo-rows" aria-hidden="true"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span></div>
+            <div id="demo-map" class="demo-map" role="img" aria-label="Interactive map unavailable until the local planner module loads. The synthetic example tests a blocked crossing on a fully known grid.">
+              <p id="demo-unavailable" class="demo-map-fallback">A crossing is blocked.<br>The planner finds a permitted detour or holds position.<span>Enable JavaScript and load the local planner to try this floor. A recorded run is available further down this page.</span></p>
+              <div id="demo-grid" class="demo-grid" aria-hidden="true"></div>
+              <svg class="demo-route" viewBox="0 0 9 7" aria-hidden="true"><polyline id="demo-executed" class="demo-executed"/><polyline id="demo-path"/></svg>
+            </div>
+          </div>
+          <div class="demo-coordinate-register"><span>Robot <strong id="demo-position">—</strong></span><span>Next <strong id="demo-next">—</strong></span><span>Goal <strong id="demo-goal">—</strong></span></div>
+          <div class="demo-readout"><span><strong id="demo-remaining">—</strong> moves remaining</span><span><strong id="demo-moves">0</strong> executed</span><span id="demo-violations">No moves yet</span></div>
+          <div class="demo-path-legend" aria-label="Path legend"><span><i class="demo-plan-key" aria-hidden="true"></i>Permitted plan</span><span><i class="demo-executed-key" aria-hidden="true"></i>Executed moves</span></div>
+          <div class="demo-controls"><button id="demo-block" class="demo-button" disabled>Block crossing</button><button id="demo-run" class="demo-button demo-primary" disabled>Run delivery</button><button id="demo-reset" class="demo-reset" disabled>Reset</button></div>
+          <p id="demo-feedback" class="demo-feedback" role="status">Map controls require JavaScript and the local planner module. Read the recorded run below or open the workbench.</p>
+          <label class="demo-scenario-label" for="demo-scenario">Try another floor<select id="demo-scenario" disabled><option value="detour">A crossing with room to detour</option><option value="no-route">The only crossing is blocked</option></select></label>
+        </div>
+      </section>
+
+      <section id="mechanism" class="mechanism-section" aria-labelledby="mechanism-title">
+        <div class="section-introduction"><h2 id="mechanism-title">Recovery starts<br>with the floor.</h2><p>Every move has to fit the world in front of it. Route keeps the operator's edits, recovery decisions, and executed path visible.</p></div>
+        <div class="mechanism-flow">
+          <article><div class="mechanism-drawing obstruction-drawing" aria-hidden="true"><span></span><span></span><span class="blocked-square"></span><span></span><span></span></div><h3>Change a crossing</h3><p>Add an obstacle, restrict a cell, or clear a passage. Fixed walls and occupied cells stay protected.</p></article>
+          <article><div class="mechanism-drawing" aria-hidden="true"><svg viewBox="0 0 220 44"><path class="faint-path" d="M12 22h196"/><path class="orange-path" d="M12 22h62V8h66v14h68"/><rect x="99" y="15" width="16" height="16" rx="2"/></svg></div><h3>Find a permitted path</h3><p>The local planner checks four directions. If no route exists, the mission stops and asks for clearance.</p></article>
+          <article><div class="mechanism-drawing evidence-drawing" aria-hidden="true"><span>move</span><span>check</span><span>record</span></div><h3>Keep the actual record</h3><p>Inspect the action log and export the executed path. Arrival is recorded only when the robot reaches the goal.</p></article>
+        </div>
+      </section>
+
+      <section class="route-run-record" aria-labelledby="route-record-title">
+        <div class="route-record-copy"><h2 id="route-record-title">The detour,<br>as executed.</h2><p>In this recorded synthetic run, an obstacle was added at E4 after the first move. The local planner rerouted the delivery from B4 to H4 through permitted cells.</p><dl class="route-record-facts"><div><dt>Executed</dt><dd>10 moves</dd></div><div><dt>Replanned</dt><dd>Once</dd></div><div><dt>History</dt><dd>Valid</dd></div><div><dt>Constraint violations</dt><dd>0</dd></div></dl><a class="text-link" href="/product-evidence/route-local-detour.json">Inspect the action record<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5"/></svg></a><p class="route-record-limit">A deterministic result on a fully known 2D grid. No model, cloud job, sensors, physics, or hardware produced this run.</p></div>
+        <figure class="route-record-capture"><picture><source media="(max-width: 600px)" srcset="/product-evidence/route-local-detour-mobile.png" width="358" height="1732"><img id="route-record-image" src="/product-evidence/route-local-detour-desktop.png" width="1344" height="990" loading="lazy" alt="Actual Route workbench floor and mission console showing delivery at H4, ten executed moves, and zero constraint violations."></picture><p id="route-capture-fallback" hidden>Workbench capture unavailable. Inspect the action record for the actual moves, map edit, and arrival event.</p><figcaption>Actual local workbench capture · Synthetic delivery floor<br><a href="/product-evidence/route-local-detour-desktop.png">View full-size workbench capture</a></figcaption></figure>
+      </section>
+
+      <section class="decision-section" aria-labelledby="decision-title">
+        <div class="decision-copy"><h2 id="decision-title">A decision layer.<br>A firm movement boundary.</h2><p>In the workbench, an optional Nemotron decision can follow the validated route, hold position, or request operator clearance. It cannot rewrite the floor or invent a completed delivery.</p><a class="text-link" href="/route/">Explore the recovery controls<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5"/></svg></a></div>
+        <div class="decision-instrument"><div class="decision-instrument-header"><span>Allowed recovery actions</span><span>Planner enforced</span></div><ul><li><span class="action-shape action-follow" aria-hidden="true"></span><div><strong>Follow validated route</strong><p>Advance through permitted cells.</p></div></li><li><span class="action-shape action-hold" aria-hidden="true"></span><div><strong>Hold position</strong><p>Wait without making a move.</p></div></li><li><span class="action-shape action-clear" aria-hidden="true"></span><div><strong>Request operator clearance</strong><p>Ask for an inspection. Infer no clearance.</p></div></li></ul><p class="decision-disclosure">Requires configured model access and explicit consent. Live Nemotron and Nebius cloud proof remain unverified. No live model inference is running on this page.</p></div>
+      </section>
+
+      <section class="evidence-section" aria-labelledby="evidence-title"><h2 id="evidence-title">Know what the result proves.</h2><dl class="evidence-ledger"><div><dt>Local simulation</dt><dd>Audited grid transitions, explicit obstacles, and a reproducible action history.</dd><dd class="evidence-state">Available here</dd></div><div><dt>Nemotron decision</dt><dd>A state-bound action with separate model provenance. Movement remains constrained.</dd><dd class="evidence-state">Requires model access</dd></div><div><dt>Nebius evaluation</dt><dd>A reviewed CPU job bundle, cloud status, and a matching result from job logs.</dd><dd class="evidence-state">Requires cloud access</dd></div></dl><p class="evidence-limit">Synthetic maps. No sensor perception, physics simulation, robot deployment, or physical safety claim.</p></section>
+      <section class="route-final"><div><h2>Give the mission<br>a floor to work with.</h2><p>Three scenarios. Editable crossings. Every move accounted for.</p></div><a class="marketing-button launch-button" href="/route/">Open Route Recovery<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5"/></svg></a></section>
+    </main>
+    <footer class="marketing-footer"><p>Route Recovery · A synthetic delivery workbench</p><a href="/">Home</a></footer>
+  </div>
+  <noscript><p class="noscript-note">Enable JavaScript to try the local map. The workbench also requires JavaScript.</p></noscript>
+</body>
+</html>

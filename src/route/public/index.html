@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f1f3f2">
+    <meta name="description" content="An interactive local delivery simulation. Change the floor, execute a detour, or stop when no permitted route exists.">
+    <title>Route Recovery — Delivery control</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="/fonts.css">
+    <link rel="stylesheet" href="./styles.css">
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#floor">Skip to floor map</a>
+    <div class="shell">
+      <header class="masthead">
+        <div class="identity">
+          <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M9 30V10h21v20H20V20"/><circle cx="20" cy="20" r="3"/></svg>
+          <div><h1>Route Recovery</h1><p>Mission workbench</p></div>
+        </div>
+        <div class="header-actions"><span class="local-label"><span></span>Local 2D simulation</span><button id="export" class="button secondary" disabled>Export run <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v9m-4-4 4 4 4-4M4 13v4h12v-4"/></svg></button></div>
+      </header>
+      <nav id="product-nav" class="product-nav" aria-label="Product navigation" hidden><a href="/products/route">Overview</a><a href="/">Home</a></nav>
+
+      <main>
+        <div class="toolbar">
+          <label class="scenario-control" for="scenario"><span>Mission scenario</span><select id="scenario" disabled><option>Loading scenarios…</option></select></label>
+          <div class="transport" aria-label="Simulation controls">
+            <button id="run" class="button primary" disabled>Run delivery</button>
+            <button id="step" class="button secondary" disabled>Step once</button>
+            <button id="reset" class="button quiet" disabled>Reset</button>
+          </div>
+          <p id="compact-status" class="compact-status"></p>
+        </div>
+
+        <div class="workspace">
+          <section class="floor-panel" aria-labelledby="floor-title">
+            <div class="floor-heading"><div><h2 id="floor-title">Preparing the floor</h2><p id="scenario-description">Loading the local planner…</p></div><span id="grid-size" class="grid-size">—</span></div>
+            <div class="floor-frame">
+              <div id="column-labels" class="column-labels" aria-hidden="true"></div>
+              <div id="row-labels" class="row-labels" aria-hidden="true"></div>
+              <div class="map-canvas">
+                <div id="floor" class="floor" role="group" aria-label="Editable floor map" aria-describedby="map-help"></div>
+                <svg id="route-overlay" class="route-overlay" aria-hidden="true"><polyline id="executed-line" class="executed-line"/><polyline id="route-line"/></svg>
+              </div>
+            </div>
+            <div class="map-register" aria-label="Current floor coordinates"><span>Robot <strong id="robot-coordinate">—</strong></span><span>Next <strong id="next-coordinate">—</strong></span><span>Goal <strong id="goal-coordinate">—</strong></span><span id="map-route-state" class="map-route-state">Preparing route</span></div>
+            <ul class="legend" aria-label="Map legend">
+              <li><span class="key robot-key">R</span>Robot</li><li><span class="key goal-key">G</span>Goal</li><li><span class="key wall-key"></span>Wall</li><li><span class="key obstacle-key">×</span>Obstacle</li><li><span class="key restricted-key">/</span>Restricted</li><li><span class="path-key"></span>Permitted plan</li><li><span class="executed-key"></span>Executed</li>
+            </ul>
+            <div class="floor-editor">
+              <fieldset id="edit-modes"><legend>Change the floor</legend><div class="mode-options">
+                <label><input type="radio" name="edit-mode" value="obstacle" checked><span>Add obstacle</span></label>
+                <label><input type="radio" name="edit-mode" value="restricted"><span>Restrict cell</span></label>
+                <label><input type="radio" name="edit-mode" value="erase"><span>Clear cell</span></label>
+              </div></fieldset>
+              <p id="map-help">Choose a tool, then select a floor cell. Arrow keys move between cells; Enter applies the tool. Walls, endpoints, and the robot are fixed.</p>
+              <p id="feedback" class="feedback" role="status">The simulation is loading.</p>
+            </div>
+          </section>
+
+          <aside class="mission-panel" aria-label="Mission progress">
+            <section class="mission-status" id="mission-status" data-status="loading">
+              <div class="status-top"><span id="status-label" class="status-label">Loading</span><span id="mission-code" class="mission-code">MISSION 01</span></div>
+              <h2 id="status-title" aria-live="polite">Connecting the controls</h2>
+              <p id="status-description">No cloud connection is needed.</p>
+              <dl class="metrics"><div><dt>Moves executed</dt><dd id="moves">0</dd></div><div><dt>Moves remaining</dt><dd id="remaining">—</dd></div><div><dt>Replans</dt><dd id="replans">0</dd></div><div><dt>Constraint violations</dt><dd id="violations">0</dd></div></dl>
+            </section>
+            <section class="intervention" aria-labelledby="intervention-title"><h3 id="intervention-title">Introduce a change</h3><p id="suggestion-description">Each scenario includes a floor change to try.</p><button id="suggested-edit" class="button secondary" disabled>Change the floor</button></section>
+            <section class="event-section" aria-labelledby="event-heading"><div class="event-heading"><h3 id="event-heading">Action log</h3><span id="event-count">0 events</span></div><ol id="event-log" class="event-log" aria-label="Action log, newest first"><li>Waiting for the first plan.</li></ol></section>
+          </aside>
+        </div>
+        <section id="recovery-panel" class="recovery-panel" aria-labelledby="recovery-title">
+          <div class="recovery-heading"><h2 id="recovery-title">Recovery decision</h2><span class="section-boundary">Optional model layer</span></div>
+          <p id="recovery-availability" class="recovery-note">Checking the local controls…</p>
+          <div class="recovery-columns">
+            <div class="recovery-stack">
+              <label class="check-label"><input id="recovery-enabled" type="checkbox"> Use Nemotron decisions for Run</label>
+              <label for="recovery-goal">Operator objective</label>
+              <textarea id="recovery-goal" maxlength="2000" rows="3">Deliver if a permitted route exists. Otherwise ask an operator to inspect the obstruction.</textarea>
+              <label class="check-label"><input id="recovery-send-consent" type="checkbox"> Send this synthetic map, action history, and objective to the configured Nemotron model.</label>
+              <button id="recovery-request" type="button" class="button secondary">Request recovery decision</button>
+              <label for="recovery-history">Saved decisions</label>
+              <select id="recovery-history"><option value="">No saved decisions</option></select>
+            </div>
+            <div class="recovery-stack">
+              <p id="recovery-decision" class="recovery-note">No decision selected. The local planner remains available.</p>
+              <label class="check-label"><input id="recovery-apply-consent" type="checkbox"> Apply this decision when I press Run. Movement must follow the audited route.</label>
+              <p id="recovery-feedback" class="feedback" role="status"></p>
+              <button id="recovery-export" type="button" class="button secondary" disabled>Download recovery receipt</button>
+              <pre id="recovery-receipt" class="recovery-artifact" hidden></pre>
+            </div>
+          </div>
+          <details class="cloud-section">
+            <summary>Evaluate this state with Nebius Serverless Jobs</summary>
+            <p>Prepare and review a CPU simulation bundle first. Cloud submission requires separate AI Cloud credentials. This does not deploy robot hardware or simulate physics.</p>
+            <form id="route-job-form" class="recovery-stack">
+              <div class="job-config">
+                <label>Project ID<input id="job-project" required placeholder="project-…" autocomplete="off"></label>
+                <label>Subnet ID<input id="job-subnet" required placeholder="vpcsubnet-…" autocomplete="off"></label>
+                <label>CPU platform<select id="job-platform" required><option value="">Choose a verified platform</option><option value="cpu-d3">cpu-d3</option><option value="cpu-e2">cpu-e2</option></select></label>
+                <label>Preset<select id="job-preset"><option value="2vcpu-8gb">2 vCPU / 8 GiB RAM</option></select></label>
+              </div>
+              <p class="recovery-note">Fixed limits: one regular CPU job, 100 GiB disk, 1 hour timeout, no automatic retry. Confirm availability and rates in your project. Inference happens before the job; the job evaluates the selected action and baseline.</p>
+              <button class="button secondary" id="job-prepare" type="submit">Prepare reviewable bundle locally</button>
+            </form>
+            <label for="job-bundle-history">Saved bundles</label><select id="job-bundle-history"><option value="">No saved bundles</option></select>
+            <pre id="job-review" class="recovery-artifact" hidden></pre>
+            <div class="job-actions"><button id="job-download" type="button" class="button secondary" disabled>Download bundle JSON</button><label class="check-label"><input id="job-consent" type="checkbox"> I reviewed this bundle and authorize one billed cloud job.</label><button id="job-submit" type="button" class="button primary" disabled>Submit reviewed job</button></div>
+            <label for="job-history">Submitted jobs</label><select id="job-history"><option value="">No submitted jobs</option></select>
+            <label class="check-label"><input id="job-read-consent" type="checkbox"> Allow cloud status requests and CLI log retrieval for the selected job.</label>
+            <div class="job-actions"><button id="job-poll" type="button" class="button secondary" disabled>Check job status</button><button id="job-logs" type="button" class="button secondary" disabled>Verify report from logs</button></div>
+            <p id="job-feedback" class="feedback" role="status">No cloud job has been submitted from these controls.</p>
+            <pre id="job-result" class="recovery-artifact" hidden></pre>
+          </details>
+        </section>
+      </main>
+
+      <footer><p><strong>Audited grid planner.</strong> Deterministic shortest paths on synthetic maps. Optional Nemotron decisions and Nebius job receipts are recorded separately. No sensors, physics, or robot hardware.</p><span>Four directions · One cell per move</span></footer>
+    </div>
+    <noscript><p class="no-script">Enable JavaScript to use the simulator. No delivery has been executed.</p></noscript>
+  </body>
+</html>

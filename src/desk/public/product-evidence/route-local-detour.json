@@ -1,0 +1,458 @@
+{
+  "schemaVersion": 1,
+  "scenarioId": "detour",
+  "simulation": "deterministic-2d-grid",
+  "planner": "breadth-first-search",
+  "modelUsed": false,
+  "physicalHardware": false,
+  "physicsSimulated": false,
+  "initialMap": {
+    "width": 9,
+    "height": 7,
+    "walls": [
+      {
+        "x": 4,
+        "y": 0
+      },
+      {
+        "x": 4,
+        "y": 2
+      },
+      {
+        "x": 4,
+        "y": 4
+      },
+      {
+        "x": 4,
+        "y": 6
+      }
+    ],
+    "restricted": [],
+    "obstacles": []
+  },
+  "finalMap": {
+    "width": 9,
+    "height": 7,
+    "walls": [
+      {
+        "x": 4,
+        "y": 0
+      },
+      {
+        "x": 4,
+        "y": 2
+      },
+      {
+        "x": 4,
+        "y": 4
+      },
+      {
+        "x": 4,
+        "y": 6
+      }
+    ],
+    "restricted": [],
+    "obstacles": [
+      {
+        "x": 4,
+        "y": 3
+      }
+    ]
+  },
+  "complete": true,
+  "status": "complete",
+  "moves": 10,
+  "replans": 1,
+  "constraintViolations": 0,
+  "historyValid": true,
+  "start": {
+    "x": 1,
+    "y": 3
+  },
+  "position": {
+    "x": 7,
+    "y": 3
+  },
+  "goal": {
+    "x": 7,
+    "y": 3
+  },
+  "traveledPath": [
+    {
+      "x": 1,
+      "y": 3
+    },
+    {
+      "x": 2,
+      "y": 3
+    },
+    {
+      "x": 3,
+      "y": 3
+    },
+    {
+      "x": 3,
+      "y": 4
+    },
+    {
+      "x": 3,
+      "y": 5
+    },
+    {
+      "x": 4,
+      "y": 5
+    },
+    {
+      "x": 5,
+      "y": 5
+    },
+    {
+      "x": 6,
+      "y": 5
+    },
+    {
+      "x": 7,
+      "y": 5
+    },
+    {
+      "x": 7,
+      "y": 4
+    },
+    {
+      "x": 7,
+      "y": 3
+    }
+  ],
+  "remainingRoute": [
+    {
+      "x": 7,
+      "y": 3
+    }
+  ],
+  "events": [
+    {
+      "sequence": 1,
+      "type": "initialized",
+      "position": {
+        "x": 1,
+        "y": 3
+      },
+      "details": {
+        "message": "Started a deterministic 2D grid simulation.",
+        "scenarioId": "detour"
+      }
+    },
+    {
+      "sequence": 2,
+      "type": "route_planned",
+      "position": {
+        "x": 1,
+        "y": 3
+      },
+      "details": {
+        "message": "Planned a legal route with 6 remaining moves.",
+        "route": [
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 3
+          },
+          {
+            "x": 5,
+            "y": 3
+          },
+          {
+            "x": 6,
+            "y": 3
+          },
+          {
+            "x": 7,
+            "y": 3
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 3,
+      "type": "moved",
+      "position": {
+        "x": 2,
+        "y": 3
+      },
+      "details": {
+        "message": "Moved from (1, 3) to (2, 3).",
+        "from": {
+          "x": 1,
+          "y": 3
+        },
+        "to": {
+          "x": 2,
+          "y": 3
+        }
+      }
+    },
+    {
+      "sequence": 4,
+      "type": "cell_edited",
+      "position": {
+        "x": 2,
+        "y": 3
+      },
+      "details": {
+        "message": "Marked cell (4, 3) as obstacle.",
+        "cell": {
+          "x": 4,
+          "y": 3
+        },
+        "mode": "obstacle",
+        "previousMode": "open"
+      }
+    },
+    {
+      "sequence": 5,
+      "type": "route_replanned",
+      "position": {
+        "x": 2,
+        "y": 3
+      },
+      "details": {
+        "message": "Replanned a legal route with 9 remaining moves.",
+        "route": [
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 4
+          },
+          {
+            "x": 3,
+            "y": 5
+          },
+          {
+            "x": 4,
+            "y": 5
+          },
+          {
+            "x": 5,
+            "y": 5
+          },
+          {
+            "x": 6,
+            "y": 5
+          },
+          {
+            "x": 7,
+            "y": 5
+          },
+          {
+            "x": 7,
+            "y": 4
+          },
+          {
+            "x": 7,
+            "y": 3
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 6,
+      "type": "moved",
+      "position": {
+        "x": 3,
+        "y": 3
+      },
+      "details": {
+        "message": "Moved from (2, 3) to (3, 3).",
+        "from": {
+          "x": 2,
+          "y": 3
+        },
+        "to": {
+          "x": 3,
+          "y": 3
+        }
+      }
+    },
+    {
+      "sequence": 7,
+      "type": "moved",
+      "position": {
+        "x": 3,
+        "y": 4
+      },
+      "details": {
+        "message": "Moved from (3, 3) to (3, 4).",
+        "from": {
+          "x": 3,
+          "y": 3
+        },
+        "to": {
+          "x": 3,
+          "y": 4
+        }
+      }
+    },
+    {
+      "sequence": 8,
+      "type": "moved",
+      "position": {
+        "x": 3,
+        "y": 5
+      },
+      "details": {
+        "message": "Moved from (3, 4) to (3, 5).",
+        "from": {
+          "x": 3,
+          "y": 4
+        },
+        "to": {
+          "x": 3,
+          "y": 5
+        }
+      }
+    },
+    {
+      "sequence": 9,
+      "type": "moved",
+      "position": {
+        "x": 4,
+        "y": 5
+      },
+      "details": {
+        "message": "Moved from (3, 5) to (4, 5).",
+        "from": {
+          "x": 3,
+          "y": 5
+        },
+        "to": {
+          "x": 4,
+          "y": 5
+        }
+      }
+    },
+    {
+      "sequence": 10,
+      "type": "moved",
+      "position": {
+        "x": 5,
+        "y": 5
+      },
+      "details": {
+        "message": "Moved from (4, 5) to (5, 5).",
+        "from": {
+          "x": 4,
+          "y": 5
+        },
+        "to": {
+          "x": 5,
+          "y": 5
+        }
+      }
+    },
+    {
+      "sequence": 11,
+      "type": "moved",
+      "position": {
+        "x": 6,
+        "y": 5
+      },
+      "details": {
+        "message": "Moved from (5, 5) to (6, 5).",
+        "from": {
+          "x": 5,
+          "y": 5
+        },
+        "to": {
+          "x": 6,
+          "y": 5
+        }
+      }
+    },
+    {
+      "sequence": 12,
+      "type": "moved",
+      "position": {
+        "x": 7,
+        "y": 5
+      },
+      "details": {
+        "message": "Moved from (6, 5) to (7, 5).",
+        "from": {
+          "x": 6,
+          "y": 5
+        },
+        "to": {
+          "x": 7,
+          "y": 5
+        }
+      }
+    },
+    {
+      "sequence": 13,
+      "type": "moved",
+      "position": {
+        "x": 7,
+        "y": 4
+      },
+      "details": {
+        "message": "Moved from (7, 5) to (7, 4).",
+        "from": {
+          "x": 7,
+          "y": 5
+        },
+        "to": {
+          "x": 7,
+          "y": 4
+        }
+      }
+    },
+    {
+      "sequence": 14,
+      "type": "moved",
+      "position": {
+        "x": 7,
+        "y": 3
+      },
+      "details": {
+        "message": "Moved from (7, 4) to (7, 3).",
+        "from": {
+          "x": 7,
+          "y": 4
+        },
+        "to": {
+          "x": 7,
+          "y": 3
+        }
+      }
+    },
+    {
+      "sequence": 15,
+      "type": "complete",
+      "position": {
+        "x": 7,
+        "y": 3
+      },
+      "details": {
+        "message": "Reached the delivery goal in 10 moves."
+      }
+    }
+  ]
+}
