@@ -1,0 +1,25 @@
+# Route Recovery: recording plan
+
+Draft prepared October 22, 2026. Target 120 seconds. Narration is approximately 215 words, leaving room for genuine module action and pauses. Measure the export: keep it strictly under three minutes and include at least 60 seconds of real application-module operation under the no-hardware video rule. Deepgram narration now exists with a matching live receipt (93.864 seconds estimated by afinfo); listening review and final video measurement remain pending. A required cloud shot is not complete merely because this plan exists.
+
+This is a synthetic discrete grid. Keep that label visible throughout the mission. A visually convincing robot icon does not establish hardware, perception, dynamics or physical safety. BLOCKED shots need actual authorized sponsor execution and receipts.
+
+| Time | Show and do | Narration / edit cue | Evidence gate |
+| --- | --- | --- | --- |
+| 0–10s | Open /route/ on a blocked mission, with the robot stationary and the state explanation visible. | “The delivery route is blocked…” | Use Project desk; standalone port 4180 lacks the sponsor workflow. |
+| 10–70s | Record at least 60 continuous seconds of actual module operation: obstacle/restriction edits, no-route stop, explicit clearance, a permitted detour, pause/step/resume, and audit changes. Include exact-state model review/application in this interval when available. | Spread the first four narration paragraphs across these actions. Let the user see the stop/clearance behavior within 30 seconds. | The 60-second floor excludes title cards, logos and static closing slides. Do not loop or slow footage to invent module operation. A fresh live decision is required after each state change; never reuse a stale decision. |
+| Within 10–70s | Review and consent to send map/history/objective, request Nemotron advice, inspect the actual decision and receipt, enable model mode, then apply it explicitly. Change the map to show that the prior selection becomes invalid. | Name NVIDIA Nemotron on Nebius Token Factory at the request/receipt. Explain that BFS still validates movement. | BLOCKED: actual live inference. No fabricated hold/follow outcome; show whichever valid decision returns. If this segment needs extra time, extend the video while preserving the under-three-minute ceiling. |
+| 70–97s | Prepare and inspect the exact-state job bundle, show the genuine tracked Nebius Serverless Job, then its completed status and validated report hashes. | Explain preparation, submission, completion and report verification separately. A labeled cut can omit actual cloud wait time. | BLOCKED: applicable AI Cloud credits, authorized job resources, completed real job and exact report validation. A local runner or fixture receipt cannot fill this shot. |
+| 97–108s | Application Tavily lookup for a public policy/simulation question; inspect returned sources and research receipt. | State that retrieved material cannot authorize movement. | BLOCKED: real runtime search. Select useful passages for the Nemotron checklist and export both receipts; this required shot remains blocked until real execution. Do not claim search validates robot safety. |
+| 108–120s | Export actual mission and separate model/cloud receipts. End on the discrete-grid limitation and accessible code link. | Last narration paragraph. | Mission completion only if the position reached the goal through permitted cells; an export can contain a stopped/incomplete run. |
+
+Record the 60-second module segment as its own source clip before editing so its genuine duration is checkable. Keep it at normal speed. If the actual workflow requires longer, use up to 170 seconds overall rather than obscuring operations or shortening the mandatory module footage. Avoid covering the grid, current state, model-mode indicator or action log with captions.
+
+The Physical AI track remains a qualification risk for a fully known discrete grid without dynamics or hardware. Demonstrating key modules and the required real Serverless Job is necessary preparation, not an organizer guarantee of acceptance. Do not add Isaac Sim, GROOT, Cosmos or NVIDIA hardware logos when they were not used.
+
+Source facts were checked against src/route/public/recovery.js, src/route/scenarios.js, outputs/route-README.md and the live Devpost draft. Nemotron controls follow/hold/clearance; it never selects coordinates. The same reviewed state/policy is evaluated by the Jobs bundle; inference occurs before that cloud evaluation.
+
+
+Narration update: The parent task generated demo/narration.mp3 with Deepgram on October 22. The copied script/audio hashes match its live receipt. Estimated audio duration: 93.864 seconds; listening QA and final video duration remain pending.
+
+Recording saved research: after one authorized, verified provider run, later takes can reopen its saved search and checklist without another request. Show the original receipt and date, and label the shot as saved evidence. A replay must not imply that a new provider call occurred during that take.

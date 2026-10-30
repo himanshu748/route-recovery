@@ -1,0 +1,14 @@
+The delivery route is blocked. The robot has to stop or take a permitted detour.
+
+Route Recovery makes that decision visible in a synthetic grid. I change a crossing during the mission. The planner recomputes a route, and every executed move stays inside the permitted cells. When no route remains, movement stops. Clearing the crossing still requires an explicit resume.
+
+NVIDIA Nemotron on Nebius Token Factory receives the selected map, action history and objective. It chooses whether to follow the validated route, hold position, or request operator clearance. The decision is bound to that exact state. Changing the map invalidates the old decision.
+
+The model never chooses individual coordinates. A deterministic planner checks movement, and arrival requires the recorded position to reach the goal. The audit records what the mission did.
+
+I prepare a reviewable evaluation bundle for Nebius Serverless Jobs. It contains the same state, policy and expected result hashes. A submitted or completed job alone is insufficient. Verification also checks the returned report against that bundle.
+
+I use Tavily to retrieve public policy or simulation references, then select passages for Nemotron to draft a cited review checklist. The search and inference have separate receipts. This research never authorizes movement or validates physical safety.
+
+This is a discrete simulation with no sensors, dynamics or robot hardware. The exported mission, model decision and cloud report have separate receipts.
+

@@ -1,0 +1,18 @@
+{
+  "project": "route-recovery",
+  "durationSeconds": 93.864,
+  "durationMethod": "macOS afinfo estimate",
+  "provider": "deepgram",
+  "model": "aura-2-thalia-en",
+  "liveGenerationVerified": true,
+  "characters": 1508,
+  "requestId": "01a162e8-3f1e-77a2-8f31-a22f336beed7",
+  "inputSha256": "c089b1894bffcae0b1269c577d4aa4a99c4989ae200952157d58e1766f107b92",
+  "audioSha256": "aa50854fb43355018bc80d8c737ce3a274f6dbb85c02eaef0821218c7af13bad",
+  "audioPath": "demo/narration.mp3",
+  "listeningReview": "pending",
+  "video": "not recorded",
+  "receiptPath": "demo/narration.mp3.receipt.json",
+  "generatedAt": "2026-10-22T09:22:30.339Z",
+  "localCopyHashesVerified": true
+}

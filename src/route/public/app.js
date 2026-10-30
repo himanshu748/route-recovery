@@ -315,3 +315,6 @@ try {
   $('status-description').textContent = 'Reload this page to retry. No delivery has been verified.';
   feedback(error.message, true);
 }
+
+// Sponsor research is available on the integrated standalone /route/ application.
+if (location.pathname.startsWith('/route/')) import('/research.js');

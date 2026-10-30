@@ -1,0 +1,15 @@
+{
+  "mode": "dry-run",
+  "provider": "deepgram",
+  "model": "aura-2-thalia-en",
+  "encoding": "mp3",
+  "characters": 1508,
+  "unicodeCodePoints": 1508,
+  "inputSha256": "c089b1894bffcae0b1269c577d4aa4a99c4989ae200952157d58e1766f107b92",
+  "networkRequests": 0,
+  "costVerified": false,
+  "input": "demo/narration.txt",
+  "plannedOutput": "work/narration.mp3",
+  "audioGenerated": false,
+  "finalAudioDurationVerified": false
+}

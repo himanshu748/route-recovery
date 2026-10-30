@@ -1,5 +1,6 @@
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
+import { createFreeUsageGuard } from './freeUsage.js';
 
 const runFile = promisify(execFile);
 const JOB_ID = /^[a-zA-Z][a-zA-Z0-9-]{1,127}$/;
@@ -32,10 +33,11 @@ export function jobRequest({ id, config, files }) {
 
 // AI Cloud auth is deliberately separate from the Token Factory key. No
 // request is sent during construction/status; only explicit service actions.
-export function createServerlessJobs({ token = process.env.NEBIUS_CLOUD_ACCESS_TOKEN, profile = process.env.NEBIUS_CLOUD_PROFILE, fetchImpl = globalThis.fetch, execFileImpl = runFile } = {}) {
+export function createServerlessJobs({ env = process.env, token = env.NEBIUS_CLOUD_ACCESS_TOKEN, profile = env.NEBIUS_CLOUD_PROFILE, fetchImpl = globalThis.fetch, execFileImpl = runFile } = {}) {
   const profileValid = typeof profile === 'string' && /^[A-Za-z0-9_-]{1,80}$/.test(profile);
   const liveTransport = fetchImpl === globalThis.fetch && execFileImpl === runFile;
   const transport = liveTransport ? 'nebius-ai-cloud-rest-and-cli' : 'fixture';
+  const freeUsageGuard = createFreeUsageGuard({ provider: 'nebius-cloud', env });
   async function request(method, route, consent, body) {
     requireConsent(consent);
     if (typeof token !== 'string' || !token.trim()) throw new Error('AI Cloud access token is not configured. Token Factory credentials cannot submit Jobs.');
@@ -68,10 +70,13 @@ export function createServerlessJobs({ token = process.env.NEBIUS_CLOUD_ACCESS_T
     return value;
   }
   return {
-    status: () => ({ configured: Boolean(token?.trim()), logsConfigured: profileValid, transport, note: 'No live access verified. Logs require the Nebius CLI and an authenticated Cloud profile.' }),
+    status: () => ({ configured: Boolean(token?.trim()), logsConfigured: profileValid, transport, freeUsage: freeUsageGuard.status(), note: 'No live access verified. Logs require the Nebius CLI and an authenticated Cloud profile.' }),
     async submit(body, consent) {
+      requireConsent(consent);
+      if (typeof token !== 'string' || !token.trim()) throw new Error('AI Cloud access token is not configured. Token Factory credentials cannot submit Jobs.');
+      const freeUsage = fetchImpl === globalThis.fetch ? await freeUsageGuard.reserve({ operation: 'route-job-submission' }) : null;
       const result = await request('POST', '', consent, body);
-      return { resourceId: resource(result.resourceId), submitted: true, executionVerified: false, liveExecutionVerified: false, transport, liveCloudContactVerified: liveTransport };
+      return { resourceId: resource(result.resourceId), submitted: true, executionVerified: false, liveExecutionVerified: false, transport, liveCloudContactVerified: liveTransport, freeUsage };
     },
     async poll(id, consent) {
       const result = await request('GET', `/${resource(id)}`, consent);
